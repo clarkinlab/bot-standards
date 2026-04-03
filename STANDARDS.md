@@ -107,6 +107,8 @@ All credentials live in `server/index.js` server-side. The browser only calls `/
 
 ## 7. Docker & Unraid Rules
 
+- **Always check for existing containers before suggesting a new one.** Run `docker ps -a` to see what's already running. Many common services (Grafana, InfluxDB, Telegraf, etc.) may already be installed. Never suggest installing something that's already there.
+- **Always use Unraid Community Apps templates when installing new containers.** Do not suggest raw `docker run` commands for new services — Unraid templates handle paths, ports, and restarts correctly and survive Unraid upgrades. Only use `docker run` for custom containers with no available template.
 - **Never recreate containers unnecessarily.** Use `docker restart` for config changes, only rebuild images when code changes.
 - **Always use `unless-stopped` restart policy** on all containers.
 - **Config files must be bind-mounted to `/mnt/user/appdata/[container]/`** so they survive container recreation.
