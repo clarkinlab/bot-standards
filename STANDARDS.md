@@ -112,7 +112,7 @@ All credentials live in `server/index.js` server-side. The browser only calls `/
 - **Never recreate containers unnecessarily.** Use `docker restart` for config changes, only rebuild images when code changes.
 - **Always use `unless-stopped` restart policy** on all containers.
 - **Config files must be bind-mounted to `/mnt/user/appdata/[container]/`** so they survive container recreation.
-- **The bot's workspace path inside the container is `/home/node/.openclaw/workspace/`** — this is NOT mounted to the host. Do not rely on workspace writes persisting. Use GitHub instead.
+- **The bot's workspace path inside the container is `/root/.openclaw/workspace/`** — this IS mounted to the host at `/mnt/user/appdata/openclaw-matt/workspace/`. Use exec shell commands to write files here (see Section 10).
 - **To verify a container is reading the correct config:**
 ```bash
 docker exec openclaw-matt cat /root/.openclaw/openclaw.json | jq '.gateway'
@@ -153,7 +153,7 @@ When something isn't working, go through this in order:
 
 - **`JSON.stringify` in onclick attributes breaks** when data contains quotes or special characters. Always use global variables instead.
 - **InfluxDB v1 ignores column aliases.** Always access by index.
-- **The bot's workspace doesn't persist to host.** GitHub is the only reliable storage.
+- **OpenClaw file tools (`write`/`read`/`edit`) use the wrong workspace path.** These tools hardcode `/home/node/.openclaw/workspace/` which is NOT mounted to the host. Always use `exec` with shell commands (`tee`, `cat >`, etc.) for workspace file writes. The exec environment correctly uses `/root/.openclaw/workspace/` which IS mounted at `/mnt/user/appdata/openclaw-matt/workspace/`.
 - **Wrong GitHub token:** The bot account PAT contains `NHG` — if you see `NHH` it's the wrong token.
 - **openclaw.json MCP key must be `.mcp.servers`** — never `.mcpServers` at root level.
 - **Glances export and web server mode are mutually exclusive.** Use Telegraf for InfluxDB export instead.
