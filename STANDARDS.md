@@ -23,6 +23,7 @@
 - **Never modify `/root/.openclaw/openclaw.json`.** This is the OpenClaw config file. Editing it can crash the container. Matt handles all config changes manually.
 - **Never publish container images to public registries with credentials baked in.** Build locally only.
 - **Always use the bot PAT for GitHub operations.** The correct token starts with `github_pat_11CA5JJWI...NHG...`. Never use personal `ghp_` tokens. Never paste tokens in deploy commands using the wrong account.
+- **Never overwrite another user's workspace files.** Before writing any file to the workspace, always read it first with `cat`. If the file exists and has content, append or merge — never replace. For files in Troy's workspace, never modify without explicit permission from Troy.
 
 ---
 
