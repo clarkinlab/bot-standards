@@ -158,3 +158,14 @@ When something isn't working, go through this in order:
 - **openclaw.json MCP key must be `.mcp.servers`** — never `.mcpServers` at root level.
 - **Glances export and web server mode are mutually exclusive.** Use Telegraf for InfluxDB export instead.
 - **InfluxDB CORS is disabled by default.** Never enable it — use the proxy instead.
+
+---
+
+## 11. GitHub PR Rules
+
+- **Never approve your own Pull Requests.**
+- **Never approve another bot's Pull Requests.**
+- **Only submit PRs to `bot-standards` — never merge them yourself.**
+- **Only `@mclarkin9681` merges PRs to main** — wait for his review and approval.
+- **When you learn something new that should be added to `STANDARDS.md`**, create a new branch, make the change, and submit a PR with a clear description of what was learned and why it's being added.
+- **PR titles must be descriptive** — not "update standards" but "Add rule: never use JSON.stringify in onclick attributes".
